@@ -1,7 +1,12 @@
 .button {
   padding: 10px 20px;
   display: inline-block;
-  color: #000;
-  background: #ccc;
+  color: #fff;
+  background: #2587e8;
   border: none;
+
+  &:disabled {
+    color: #555;
+    background: #ccc;
+  }
 }

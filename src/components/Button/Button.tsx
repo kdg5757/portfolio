@@ -3,7 +3,7 @@ import { ReactNode } from "react";
 import Styles from "./Button.module.scss";
 
 type Props = {
-  label: ReactNode;
+  children: ReactNode;
   isDisabled?: boolean;
   className?: string;
   onClick?: () => void;
@@ -11,7 +11,7 @@ type Props = {
 
 const Button: React.FC<Props> = ({
   className,
-  label,
+  children,
   isDisabled,
   onClick,
   ...props
@@ -23,7 +23,7 @@ const Button: React.FC<Props> = ({
       disabled={isDisabled}
       {...props}
     >
-      {label}
+      {children}
     </button>
   );
 };

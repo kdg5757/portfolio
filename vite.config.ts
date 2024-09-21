@@ -23,7 +23,7 @@ export default defineConfig({
       reporter: ['text', 'json', 'html'],
       reportsDirectory: './coverage',
       include: ['src/**/*.{ts,tsx}'],
-      exclude: ['node_modules', 'src/__mocks__/**', 'src/**/*.stories.{js,ts,jsx,tsx}', 'src/**/*.d.ts', 'src/**/index.{js,ts,jsx,tsx}', 'src/constants/**', 'src/store/**', 'src/models/**'],
+      exclude: ['node_modules', 'src/__mocks__/**', 'src/**/*.stories.{js,ts,jsx,tsx}', 'src/**/*.test.{js,ts,jsx,tsx}', 'src/**/*.d.ts', 'src/**/index.{js,ts,jsx,tsx}', 'src/constants/**', 'src/store/**', 'src/models/**'],
     },
   },
 });

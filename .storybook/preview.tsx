@@ -1,15 +1,19 @@
 import type { Preview, StoryFn } from "@storybook/react";
-import {initialize, mswLoader} from 'msw-storybook-addon'
-import React from "react";
-import {storybookHandlers} from "../src/__mocks__/handlers"
+import { initialize, mswLoader } from "msw-storybook-addon";
+import { Provider as JotaiProvider } from "jotai";
+import { storybookHandlers } from "../src/__mocks__/handlers";
 
 const BaseDecorator = (Story: StoryFn) => {
-  return <Story />
-}
+  return (
+    <JotaiProvider>
+      <Story />
+    </JotaiProvider>
+  );
+};
 
 initialize({
-  onUnhandledRequest: "bypass"
-})
+  onUnhandledRequest: "bypass",
+});
 
 const preview: Preview = {
   parameters: {
@@ -22,11 +26,11 @@ const preview: Preview = {
     msw: {
       handlers: {
         ...storybookHandlers,
-      }
-    }
+      },
+    },
   },
   decorators: [BaseDecorator],
-  loaders: [mswLoader]
+  loaders: [mswLoader],
 };
 
 export default preview;

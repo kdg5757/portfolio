@@ -6,7 +6,7 @@ import {
   RenderResult,
 } from "@testing-library/react";
 import { ReactNode } from "react";
-import { RecoilRoot } from "recoil";
+import { Provider as JotaiProvider } from "jotai";
 
 type TestProps = {
   children: ReactNode;
@@ -14,9 +14,9 @@ type TestProps = {
 
 export const TestProvider: React.FC<TestProps> = ({ children }) => {
   return (
-    <RecoilRoot>
+    <JotaiProvider>
       <MemoryRouter>{children}</MemoryRouter>
-    </RecoilRoot>
+    </JotaiProvider>
   );
 };
 

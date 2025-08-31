@@ -1,6 +1,6 @@
 type Props = Record<string, never>;
 
-const Error: React.FC<Props> = ({}) => {
+const ErrorPage: React.FC<Props> = ({}) => {
   return (
     <>
       <div>Error</div>
@@ -8,4 +8,4 @@ const Error: React.FC<Props> = ({}) => {
   );
 };
 
-export default Error;
+export default ErrorPage;

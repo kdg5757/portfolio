@@ -4,7 +4,6 @@ import { ResponseBody } from "~/models";
 
 type MockApis = {
   checkNumber: HttpHandler;
-  checkNumberError: HttpHandler;
 };
 
 export const testMockApi: MockApis = {
@@ -17,6 +16,13 @@ export const testMockApi: MockApis = {
 
     return HttpResponse.json(response, { status: 200 });
   }),
+};
+
+type MockCustomApis = {
+  checkNumberError: HttpHandler;
+};
+
+export const testMockCustomApi: MockCustomApis = {
   checkNumberError: http.post(API_PATHS.checkNumber, () => {
     const response: ResponseBody<boolean> = {
       code: "1000",

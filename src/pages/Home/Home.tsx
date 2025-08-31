@@ -1,8 +1,8 @@
 import checkApi from "~/apis/checkApi";
-import CheckForm from "./components/CheckForm";
 import Styles from "./Home.module.scss";
 import { useState } from "react";
 import { API_STATUS } from "~/constants/status";
+import CheckForm from "~/components/CheckForm";
 
 type Props = Record<string, never>;
 

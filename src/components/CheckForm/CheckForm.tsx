@@ -2,7 +2,12 @@ import { ChangeEvent, useMemo, useState } from "react";
 import Button from "~/components/Button";
 import Input from "~/components/Input";
 
-import Styles from "./CheckForm.module.scss";
+import {
+  areaStyle,
+  buttonStyle,
+  cautionStyle,
+  inputStyle,
+} from "./CheckForm.styles";
 
 type Props = {
   error?: boolean;
@@ -23,22 +28,18 @@ const CheckForm: React.FC<Props> = ({ onChecker, error, ...props }) => {
 
   return (
     <div>
-      <div className={Styles.area} {...props}>
+      <div css={areaStyle} {...props}>
         <Input
-          className={Styles.input}
+          css={inputStyle}
           type="number"
           placeholder="番号を入力"
           onChange={onChange}
         />
-        <Button
-          className={Styles.button}
-          onClick={onSubmit}
-          isDisabled={isDisabled}
-        >
+        <Button css={buttonStyle} onClick={onSubmit} isDisabled={isDisabled}>
           確認
         </Button>
       </div>
-      {error && <p className={Styles.caution}>※正しい番号を入力してください</p>}
+      {error && <p css={cautionStyle}>※正しい番号を入力してください</p>}
     </div>
   );
 };

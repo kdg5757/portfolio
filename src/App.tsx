@@ -1,35 +1,25 @@
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import { router } from "./router";
-import { Provider as JotaiProvider } from "jotai";
-import { ThemeProvider } from "@emotion/react";
-import {
-  MutationCache,
-  QueryCache,
-  QueryClient,
-  QueryClientProvider,
-  QueryErrorResetBoundary,
-} from "react-query";
+import { Suspense, useEffect, useMemo, useState } from "react";
 import { ErrorBoundary } from "react-error-boundary";
+import {
+  QueryErrorResetBoundary,
+  useIsFetching,
+  useIsMutating,
+} from "react-query";
+
+import { Spin } from "antd";
+import { LoadingOutlined } from "@ant-design/icons";
+
 import ErrorPage from "./pages/ErrorPage";
-import { Suspense, useEffect, useState } from "react";
+import { PageRouter } from "./router";
 
 function App() {
+  const isFetching = useIsFetching();
+  const isMutating = useIsMutating();
   const [isOffline, setIsOffline] = useState(false);
-  const browserRouter = createBrowserRouter(router);
-
-  const queryCache = new QueryCache({});
-
-  const mutationCache = new MutationCache({});
-
-  const queryClient = new QueryClient({
-    queryCache,
-    mutationCache,
-    defaultOptions: {
-      queries: {
-        retry: false,
-      },
-    },
-  });
+  const isLoading = useMemo(
+    () => isFetching > 0 || isMutating > 0,
+    [isFetching, isMutating],
+  );
 
   useEffect(() => {
     window.addEventListener("offline", () => {
@@ -52,33 +42,29 @@ function App() {
   }, []);
 
   return (
-    <JotaiProvider>
-      <ThemeProvider theme={{}}>
-        <QueryClientProvider client={queryClient}>
-          <QueryErrorResetBoundary>
-            {({ reset }) => (
-              <ErrorBoundary onReset={reset} fallback={<ErrorPage />}>
-                <Suspense fallback={<div>Loading...</div>}>
-                  {/* TODO: あとでポップアップ修正する */}
-                  {isOffline && (
-                    <div
-                      style={{
-                        textAlign: "center",
-                        backgroundColor: "#ffcc00",
-                        padding: "8px",
-                      }}
-                    >
-                      オフラインです。通信環境をご確認ください。
-                    </div>
-                  )}
-                  <RouterProvider router={browserRouter} />
-                </Suspense>
-              </ErrorBoundary>
+    <QueryErrorResetBoundary>
+      {({ reset }) => (
+        <ErrorBoundary onReset={reset} fallback={<ErrorPage />}>
+          <Suspense fallback={<div>Loading...</div>}>
+            {/* TODO: あとでポップアップ修正する */}
+            {isOffline && (
+              <div
+                style={{
+                  textAlign: "center",
+                  backgroundColor: "#ffcc00",
+                  padding: "8px",
+                }}
+              >
+                オフラインです。通信環境をご確認ください。
+              </div>
             )}
-          </QueryErrorResetBoundary>
-        </QueryClientProvider>
-      </ThemeProvider>
-    </JotaiProvider>
+            <Spin indicator={<LoadingOutlined />} spinning={isLoading}>
+              <PageRouter />
+            </Spin>
+          </Suspense>
+        </ErrorBoundary>
+      )}
+    </QueryErrorResetBoundary>
   );
 }
 

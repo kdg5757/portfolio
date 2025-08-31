@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import Home from "./Home";
 import { expect, userEvent, waitFor, within } from "@storybook/test";
-import { testMockApi } from "~/__mocks__/api/testMockApi";
+import { testMockCustomApi } from "~/__mocks__/api/testMockApi";
 
 const meta: Meta<typeof Home> = {
   component: Home,
@@ -52,7 +52,7 @@ export const ErrorAction: Story = {
   parameters: {
     msw: {
       handlers: {
-        checkNumber: testMockApi.checkNumberError,
+        checkNumber: testMockCustomApi.checkNumberError,
       },
     },
   },

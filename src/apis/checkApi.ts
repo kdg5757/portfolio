@@ -1,4 +1,5 @@
 import { AxiosResponse } from "axios";
+
 import { API_PATHS } from "~/constants/apiPaths";
 import apiClient from "~/http/axiosClient";
 import { ResponseBody } from "~/models";

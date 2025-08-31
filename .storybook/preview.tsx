@@ -8,10 +8,13 @@ import {
   QueryCache,
   QueryClient,
   QueryClientProvider,
-} from "react-query";
+} from "@tanstack/react-query";
 import { isAxiosError } from "axios";
 import { antdTheme, theme } from "../src/utils";
 import { ConfigProvider } from "antd";
+import { withRouter } from "storybook-addon-remix-react-router";
+
+import "../src/App.css";
 
 const BaseDecorator = (Story: StoryFn) => {
   return (
@@ -83,7 +86,7 @@ const preview: Preview = {
       },
     },
   },
-  decorators: [BaseDecorator, ThemeDecorator, QueryDecorator],
+  decorators: [BaseDecorator, ThemeDecorator, QueryDecorator, withRouter],
   loaders: [mswLoader],
 };
 

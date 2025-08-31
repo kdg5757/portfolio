@@ -1,9 +1,10 @@
 import { composeStories } from "@storybook/react";
 
-import * as stories from "./Button.stories";
 import { renderTestComponent } from "~/utils/test";
 
-const { Primary, Disabled, Action } = composeStories(stories);
+import * as stories from "./PhoneNumberPage.stories";
+
+const { Primary, Action } = composeStories(stories);
 
 describe("storybook UT", () => {
   test("Primary", async () => {
@@ -14,19 +15,9 @@ describe("storybook UT", () => {
     await Primary.play!({ canvasElement: container });
   });
 
-  test("Disabled", async () => {
-    await Disabled.load();
-
-    const { container } = renderTestComponent(<Disabled />);
-
-    await Disabled.play!({ canvasElement: container });
-  });
-
   test("Action", async () => {
     await Action.load();
-
     const { container } = renderTestComponent(<Action />);
-
     await Action.play!({ canvasElement: container });
   });
 });

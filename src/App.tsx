@@ -1,16 +1,18 @@
 import { Suspense, useEffect, useMemo, useState } from "react";
 import { ErrorBoundary } from "react-error-boundary";
+
+import { Spin } from "antd";
+import { LoadingOutlined } from "@ant-design/icons";
 import {
   QueryErrorResetBoundary,
   useIsFetching,
   useIsMutating,
-} from "react-query";
-
-import { Spin } from "antd";
-import { LoadingOutlined } from "@ant-design/icons";
+} from "@tanstack/react-query";
 
 import ErrorPage from "./pages/ErrorPage";
 import { PageRouter } from "./router";
+
+import "./App.css";
 
 function App() {
   const isFetching = useIsFetching();
@@ -18,7 +20,7 @@ function App() {
   const [isOffline, setIsOffline] = useState(false);
   const isLoading = useMemo(
     () => isFetching > 0 || isMutating > 0,
-    [isFetching, isMutating],
+    [isFetching, isMutating]
   );
 
   useEffect(() => {

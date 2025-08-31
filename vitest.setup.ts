@@ -1,16 +1,17 @@
 import { afterAll, afterEach, beforeAll } from "vitest";
-import {mockServer} from "./src/__mocks__/server"
+
+import { mockServer } from "./src/__mocks__/server";
 
 beforeAll(() => {
   mockServer.listen({
     onUnhandledRequest: "error",
-  })
-})
+  });
+});
 
 afterEach(() => {
   mockServer.resetHandlers();
-})
+});
 
 afterAll(() => {
   mockServer.close();
-})
+});

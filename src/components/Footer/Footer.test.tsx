@@ -2,7 +2,7 @@ import { composeStories } from "@storybook/react";
 
 import { renderTestComponent } from "~/utils/test";
 
-import * as stories from "./Home.stories";
+import * as stories from "./Footer.stories";
 
 const { Primary } = composeStories(stories);
 

@@ -1,7 +1,8 @@
 import { composeStories } from "@storybook/react";
 
-import * as stories from "./Input.stories";
 import { renderTestComponent } from "~/utils/test";
+
+import * as stories from "./Input.stories";
 
 const { Primary, Disabled, Action } = composeStories(stories);
 

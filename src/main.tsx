@@ -1,17 +1,19 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import App from "./App.tsx";
-import { Provider as JotaiProvider } from "jotai";
-import { ThemeProvider } from "@emotion/react";
-import { antdTheme, theme } from "./utils";
+
 import { ConfigProvider } from "antd";
+import { ThemeProvider } from "@emotion/react";
 import {
   MutationCache,
   QueryCache,
   QueryClient,
   QueryClientProvider,
-} from "react-query";
+} from "@tanstack/react-query";
 import { isAxiosError } from "axios";
+import { Provider as JotaiProvider } from "jotai";
+
+import App from "./App.tsx";
+import { antdTheme, theme } from "./utils";
 
 const setup = async (): Promise<void> => {
   if (import.meta.env.DEV) {
@@ -68,6 +70,6 @@ setup().then(() =>
   createRoot(document.getElementById("root")!).render(
     <StrictMode>
       <Wrapper />
-    </StrictMode>,
-  ),
+    </StrictMode>
+  )
 );

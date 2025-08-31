@@ -48,7 +48,7 @@ const PhoneNumberPage: React.FC<Props> = () => {
             state: { phoneNumber },
           });
         },
-      }
+      },
     );
   };
 

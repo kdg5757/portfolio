@@ -14,7 +14,7 @@
     "storybook:test": "test-storybook",
     "build-storybook": "storybook build",
     "test": "vitest run",
-    "test:ui": "vitest --ui"
+    "test:ui": "vitest --ui --coverage"
   },
   "dependencies": {
     "@ant-design/icons": "5.x",

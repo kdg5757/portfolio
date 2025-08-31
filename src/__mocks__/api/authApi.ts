@@ -6,6 +6,6 @@ type MockApis = {
 
 export const authMockApi: MockApis = {
   checkNumber: http.get(`/check-phone-number`, () =>
-    HttpResponse.json(null, { status: 204 })
+    HttpResponse.json(null, { status: 204 }),
   ),
 };

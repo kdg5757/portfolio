@@ -70,6 +70,6 @@ setup().then(() =>
   createRoot(document.getElementById("root")!).render(
     <StrictMode>
       <Wrapper />
-    </StrictMode>
-  )
+    </StrictMode>,
+  ),
 );

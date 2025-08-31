@@ -1,11 +1,18 @@
+import { ReactNode } from "react";
 import { MemoryRouter } from "react-router-dom";
 
+import {
+  MutationCache,
+  QueryCache,
+  QueryClient,
+  QueryClientProvider,
+} from "@tanstack/react-query";
 import {
   queries,
   render as renderRawComponent,
   RenderResult,
 } from "@testing-library/react";
-import { ReactNode } from "react";
+import { isAxiosError } from "axios";
 import { Provider as JotaiProvider } from "jotai";
 
 type TestProps = {
@@ -13,17 +20,45 @@ type TestProps = {
 };
 
 export const TestProvider: React.FC<TestProps> = ({ children }) => {
+  const queryCache = new QueryCache({
+    onError: (error) => {
+      if (!isAxiosError(error)) {
+        return;
+      }
+      console.error("Global query error:", error);
+    },
+  });
+
+  const mutationCache = new MutationCache({
+    onError: (error) => {
+      if (!isAxiosError(error)) {
+        return;
+      }
+      console.error("Global query error:", error);
+    },
+  });
+
+  const queryClient = new QueryClient({
+    queryCache,
+    mutationCache,
+    defaultOptions: {
+      queries: {
+        retry: false,
+      },
+    },
+  });
   return (
     <JotaiProvider>
-      <MemoryRouter>{children}</MemoryRouter>
+      <QueryClientProvider client={queryClient}>
+        <MemoryRouter>{children}</MemoryRouter>
+      </QueryClientProvider>
     </JotaiProvider>
   );
 };
 
 export const renderTestComponent = (
   component: React.ReactElement,
-): RenderResult<typeof queries, HTMLElement, HTMLElement> => {
-  return renderRawComponent(component, {
+): RenderResult<typeof queries, HTMLElement, HTMLElement> =>
+  renderRawComponent(component, {
     wrapper: TestProvider,
   });
-};

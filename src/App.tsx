@@ -20,7 +20,7 @@ function App() {
   const [isOffline, setIsOffline] = useState(false);
   const isLoading = useMemo(
     () => isFetching > 0 || isMutating > 0,
-    [isFetching, isMutating]
+    [isFetching, isMutating],
   );
 
   useEffect(() => {

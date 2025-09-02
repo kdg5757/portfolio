@@ -1,7 +1,7 @@
 import { composeStories } from "@storybook/react";
 
 import { ROUTES } from "~/router";
-import { renderTestComponent } from "~/utils/test";
+import { renderRawComponent } from "~/utils/test";
 
 import { mockedNavigator } from "../../../vitest.setup";
 import * as stories from "./PhoneNumberPage.stories";
@@ -15,13 +15,13 @@ describe("storybook UT", () => {
   });
   test("Primary", async () => {
     await Primary.load();
-    const { container } = renderTestComponent(<Primary />);
+    const { container } = renderRawComponent(<Primary />);
     await Primary.play!({ canvasElement: container });
   });
 
   test("Action", async () => {
     await Action.load();
-    const { container } = renderTestComponent(<Action />);
+    const { container } = renderRawComponent(<Action />);
     await Action.play!({ canvasElement: container });
 
     expect(mockedNavigator).toHaveBeenCalledWith(

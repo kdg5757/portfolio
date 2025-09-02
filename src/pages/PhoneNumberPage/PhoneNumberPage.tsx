@@ -51,7 +51,7 @@ const PhoneNumberPage: React.FC<Props> = () => {
         onError: () => {
           // TODO: エラーの場合は、パスワード＋生年月日＋性別入力画面へ遷移するようにする
         },
-      }
+      },
     );
   };
 

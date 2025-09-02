@@ -48,7 +48,7 @@ module.exports = {
     "react/prop-types": "off",
     "prefer-template": "warn",
     "arrow-body-style": ["warn", "as-needed"],
-    "react/jsx-pascal-case": "error",
+    "react/jsx-pascal-case": ["error", { allowAllCaps: true }],
     "jsx-quotes": ["warn", "prefer-double"],
     "react/jsx-props-no-spreading": "off",
     "no-empty-pattern": "warn",

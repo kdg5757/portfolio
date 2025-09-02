@@ -1,6 +1,6 @@
 import { composeStories } from "@storybook/react";
 
-import { renderTestComponent } from "~/utils/test";
+import { renderRawComponent } from "~/utils/test";
 
 import * as stories from "./Home.stories";
 
@@ -10,7 +10,7 @@ describe("storybook UT", () => {
   test("Primary", async () => {
     await Primary.load();
 
-    const { container } = renderTestComponent(<Primary />);
+    const { container } = renderRawComponent(<Primary />);
 
     await Primary.play!({ canvasElement: container });
   });

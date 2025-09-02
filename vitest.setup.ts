@@ -1,6 +1,12 @@
+import { setProjectAnnotations } from "@storybook/react";
 import { afterAll, afterEach, beforeAll } from "vitest";
 
+import * as globalStorybookConfig from "./.storybook/preview";
 import { mockServer } from "./src/__mocks__/server";
+
+// NOTE: プロジェクト全体の Storybook 設定（decorators / parameters など）を登録
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+setProjectAnnotations(globalStorybookConfig as any);
 
 Object.defineProperty(window, "matchMedia", {
   writable: true,

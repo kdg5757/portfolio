@@ -56,9 +56,11 @@ export const TestProvider: React.FC<TestProps> = ({ children }) => {
   );
 };
 
-export const renderTestComponent = (
+const renderTestComponent = (
   component: React.ReactElement,
 ): RenderResult<typeof queries, HTMLElement, HTMLElement> =>
   renderRawComponent(component, {
     wrapper: TestProvider,
   });
+
+export { renderRawComponent, renderTestComponent };

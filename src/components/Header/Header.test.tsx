@@ -1,6 +1,6 @@
 import { composeStories } from "@storybook/react";
 
-import { renderTestComponent } from "~/utils/test";
+import { renderRawComponent } from "~/utils/test";
 
 import * as stories from "./Header.stories";
 
@@ -9,41 +9,31 @@ const { Primary, NoLeft, NoRight, NoBoth, NoAll } = composeStories(stories);
 describe("storybook UT", () => {
   test("Primary", async () => {
     await Primary.load();
-
-    const { container } = renderTestComponent(<Primary />);
-
+    const { container } = renderRawComponent(<Primary />);
     await Primary.play!({ canvasElement: container });
   });
 
   test("NoLeft", async () => {
     await NoLeft.load();
-
-    const { container } = renderTestComponent(<NoLeft />);
-
+    const { container } = renderRawComponent(<NoLeft />);
     await NoLeft.play!({ canvasElement: container });
   });
 
   test("NoRight", async () => {
     await NoRight.load();
-
-    const { container } = renderTestComponent(<NoRight />);
-
+    const { container } = renderRawComponent(<NoRight />);
     await NoRight.play!({ canvasElement: container });
   });
 
   test("NoBoth", async () => {
     await NoBoth.load();
-
-    const { container } = renderTestComponent(<NoBoth />);
-
+    const { container } = renderRawComponent(<NoBoth />);
     await NoBoth.play!({ canvasElement: container });
   });
 
   test("NoAll", async () => {
     await NoAll.load();
-
-    const { container } = renderTestComponent(<NoAll />);
-
+    const { container } = renderRawComponent(<NoAll />);
     await NoAll.play!({ canvasElement: container });
   });
 });

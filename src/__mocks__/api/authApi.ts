@@ -1,9 +1,11 @@
-import { http, HttpHandler, HttpResponse } from "msw";
+import { http, HttpHandler, HttpResponse, PathParams } from "msw";
 
-import { TokensType } from "~/models";
+import { CheckPhoneNumberRequest, TokensType } from "~/models";
 
 type MockApis = {
   checkNumber: HttpHandler;
+  login: HttpHandler;
+  signUp: HttpHandler;
   confirmSignUp: HttpHandler;
 };
 
@@ -11,6 +13,53 @@ export const authMockApi: MockApis = {
   checkNumber: http.get(`/check-phone-number`, () =>
     HttpResponse.json(null, { status: 204 }),
   ),
+  login: http.post(`/login`, () => HttpResponse.json(null, { status: 204 })),
+  signUp: http.post(`/sign-up`, () => HttpResponse.json(null, { status: 204 })),
+  confirmSignUp: http.post(`/confirm-sign-up`, () => {
+    // TODO: 任意のデータをjwtエンコードして返すようにする
+    const response: TokensType = {
+      idToken: "idToken",
+      accessToken: "accessToken",
+      refreshToken: "refreshToken",
+    };
+    return HttpResponse.json(response, { status: 200 });
+  }),
+};
+
+type CustomMockApis = {
+  checkNumber: HttpHandler;
+};
+
+export const authCustomMockApi: CustomMockApis = {
+  checkNumber: http.get(`/check-phone-number`, () =>
+    HttpResponse.json(null, { status: 401 }),
+  ),
+};
+
+// NOTE: --mode mockで実行されるモックAPI
+type SampleMockApis = {
+  checkNumber: HttpHandler;
+  login: HttpHandler;
+  signUp: HttpHandler;
+  confirmSignUp: HttpHandler;
+};
+
+export const authSampleMockApi: SampleMockApis = {
+  checkNumber: http.get<PathParams, CheckPhoneNumberRequest>(
+    `/check-phone-number`,
+    ({ request }) => {
+      const url = new URL(request.url);
+      const phoneNumber = url.searchParams.get("phoneNumber");
+
+      if (phoneNumber && /^080+?/.test(phoneNumber)) {
+        return HttpResponse.json(null, { status: 400 });
+      }
+
+      return HttpResponse.json(null, { status: 204 });
+    },
+  ),
+  login: http.post(`/login`, () => HttpResponse.json(null, { status: 204 })),
+  signUp: http.post(`/sign-up`, () => HttpResponse.json(null, { status: 204 })),
   confirmSignUp: http.post(`/confirm-sign-up`, () => {
     // TODO: 任意のデータをjwtエンコードして返すようにする
     const response: TokensType = {

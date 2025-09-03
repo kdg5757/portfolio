@@ -4,24 +4,29 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { Button, Input } from "antd";
 import { useSetAtom } from "jotai";
 
+import BackButton from "~/components/BackButton";
 import Content from "~/components/Content";
 import Footer from "~/components/Footer";
 import Header from "~/components/Header";
 import Layout from "~/components/Layout";
 import ResendButton from "~/components/ResendButton";
-import { useCheckPhoneNumberMutation, useConfirmSignUpMutation } from "~/hooks";
+import {
+  useConfirmSignUpMutation,
+  useLoginMutation,
+  useSignUpMutation,
+} from "~/hooks";
 import { ROUTES } from "~/router";
 import { userTokenAtom } from "~/store";
 
 type Props = Record<string, never>;
 
-const PhoneNumberOtpPage: React.FC<Props> = () => {
+const AccountPhoneNumberOtpPage: React.FC<Props> = () => {
   const navigate = useNavigate();
   const {
-    state: { phoneNumber },
+    state: { phoneNumber, password, birthday, gender },
   } = useLocation();
-  const { mutate: checkPhoneNumber, isPending: isCheckPending } =
-    useCheckPhoneNumberMutation();
+  const { mutate: signUp, isPending: isSignUpPending } = useSignUpMutation();
+  const { mutate: login, isPending: isLoginPending } = useLoginMutation();
   const { mutate: confirmSignUp, isPending: isConfirmPending } =
     useConfirmSignUpMutation();
   const setUserToken = useSetAtom(userTokenAtom);
@@ -36,7 +41,12 @@ const PhoneNumberOtpPage: React.FC<Props> = () => {
   }
 
   const onResend = (): void => {
-    checkPhoneNumber({ phoneNumber });
+    if (birthday || gender) {
+      login({ phoneNumber, password });
+      return;
+    }
+
+    signUp({ phoneNumber, password });
   };
 
   const onSubmit = (): void => {
@@ -49,7 +59,7 @@ const PhoneNumberOtpPage: React.FC<Props> = () => {
       {
         onSuccess: (response) => {
           setUserToken(response.data);
-          navigate(`/${ROUTES.AUTH_SUCCESS_PAGE}`);
+          navigate(`/${ROUTES.ACCOUNT_ENTRY_SUCCESS_PAGE}`);
         },
       },
     );
@@ -57,7 +67,7 @@ const PhoneNumberOtpPage: React.FC<Props> = () => {
 
   return (
     <Layout>
-      <Header>SMS認証</Header>
+      <Header left={<BackButton />}>SMS認証</Header>
       <Content>
         <div>{phoneNumber}</div>
         <div>の電話番号にSMSコードを送信しました</div>
@@ -73,7 +83,7 @@ const PhoneNumberOtpPage: React.FC<Props> = () => {
           <ResendButton
             limit={60}
             onClick={onResend}
-            disabled={isCheckPending}
+            disabled={isSignUpPending || isLoginPending}
           />
         </div>
       </Content>
@@ -86,4 +96,4 @@ const PhoneNumberOtpPage: React.FC<Props> = () => {
   );
 };
 
-export default PhoneNumberOtpPage;
+export default AccountPhoneNumberOtpPage;

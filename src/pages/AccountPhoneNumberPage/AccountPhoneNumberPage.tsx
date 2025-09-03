@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 import { Button, Form, Input } from "antd";
 
+import BackButton from "~/components/BackButton";
 import Content from "~/components/Content";
 import Footer from "~/components/Footer";
 import Header from "~/components/Header";
@@ -10,11 +11,11 @@ import Layout from "~/components/Layout";
 import { useCheckPhoneNumberMutation } from "~/hooks";
 import { ROUTES } from "~/router";
 
-import { contentStyle } from "./PhoneNumberPage.styles";
+import { contentStyle } from "./AccountPhoneNumberPage.styles";
 
 type Props = Record<string, never>;
 
-const PhoneNumberPage: React.FC<Props> = () => {
+const AccountPhoneNumberPage: React.FC<Props> = () => {
   const navigate = useNavigate();
   const { mutate: checkPhoneNumber, isPending } = useCheckPhoneNumberMutation();
   const [form] = Form.useForm<{ phoneNumber: string }>();
@@ -44,12 +45,14 @@ const PhoneNumberPage: React.FC<Props> = () => {
       { phoneNumber },
       {
         onSuccess: () => {
-          navigate(`/${ROUTES.PASSWORD_INPUT_PAGE}`, {
+          navigate(`/${ROUTES.ACCOUNT_PASSWORD_PAGE}`, {
             state: { phoneNumber },
           });
         },
         onError: () => {
-          // TODO: エラーの場合は、パスワード＋生年月日＋性別入力画面へ遷移するようにする
+          navigate(`/${ROUTES.ACCOUNT_PASSWORD_PAGE}`, {
+            state: { phoneNumber, isEntry: true },
+          });
         },
       },
     );
@@ -57,7 +60,7 @@ const PhoneNumberPage: React.FC<Props> = () => {
 
   return (
     <Layout>
-      <Header>電話番号入力</Header>
+      <Header left={<BackButton />}>電話番号入力</Header>
       <Content css={contentStyle}>
         <Form form={form}>
           <Form.Item
@@ -72,7 +75,7 @@ const PhoneNumberPage: React.FC<Props> = () => {
               },
             ]}
           >
-            <Input type="tel" />
+            <Input type="tel" maxLength={11} />
           </Form.Item>
         </Form>
       </Content>
@@ -85,4 +88,4 @@ const PhoneNumberPage: React.FC<Props> = () => {
   );
 };
 
-export default PhoneNumberPage;
+export default AccountPhoneNumberPage;

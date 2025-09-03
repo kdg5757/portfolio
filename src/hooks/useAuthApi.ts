@@ -2,7 +2,13 @@ import { useMutation, UseMutationResult } from "@tanstack/react-query";
 import { AxiosError, AxiosResponse } from "axios";
 
 import { authApi } from "~/apis";
-import { CheckPhoneNumberRequest, ConfirmRequest, TokensType } from "~/models";
+import {
+  CheckPhoneNumberRequest,
+  ConfirmRequest,
+  LoginRequest,
+  SignUpRequest,
+  TokensType,
+} from "~/models";
 
 type UseCheckPhoneNumberMutation = UseMutationResult<
   AxiosResponse<void>,
@@ -14,6 +20,30 @@ type UseCheckPhoneNumberMutation = UseMutationResult<
 export const useCheckPhoneNumberMutation = (): UseCheckPhoneNumberMutation =>
   useMutation({
     mutationFn: authApi.checkPhoneNumber,
+  });
+
+type UseLoginMutation = UseMutationResult<
+  AxiosResponse<void>,
+  AxiosError<void>,
+  LoginRequest,
+  unknown
+>;
+
+export const useLoginMutation = (): UseLoginMutation =>
+  useMutation({
+    mutationFn: authApi.login,
+  });
+
+type UseSignUpMutation = UseMutationResult<
+  AxiosResponse<void>,
+  AxiosError<void>,
+  SignUpRequest,
+  unknown
+>;
+
+export const useSignUpMutation = (): UseSignUpMutation =>
+  useMutation({
+    mutationFn: authApi.signUp,
   });
 
 type UseConfirmSignUpMutation = UseMutationResult<

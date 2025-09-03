@@ -2,10 +2,10 @@ import type { Meta, StoryObj } from "@storybook/react";
 import { expect, userEvent, within } from "@storybook/test";
 import { reactRouterParameters } from "storybook-addon-remix-react-router";
 
-import PhoneNumberOtpPage from "./PhoneNumberOtpPage";
+import AccountPhoneNumberOtpPage from "./AccountPhoneNumberOtpPage";
 
-const meta: Meta<typeof PhoneNumberOtpPage> = {
-  component: PhoneNumberOtpPage,
+const meta: Meta<typeof AccountPhoneNumberOtpPage> = {
+  component: AccountPhoneNumberOtpPage,
   parameters: {
     reactRouter: reactRouterParameters({
       location: {
@@ -15,7 +15,7 @@ const meta: Meta<typeof PhoneNumberOtpPage> = {
       },
     }),
   },
-} satisfies Meta<typeof PhoneNumberOtpPage>;
+} satisfies Meta<typeof AccountPhoneNumberOtpPage>;
 
 export default meta;
 

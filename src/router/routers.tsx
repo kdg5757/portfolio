@@ -3,15 +3,29 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 import { ROUTES } from "./routes";
 
-const PhoneNumberPage = lazy(() => import("~/pages/PhoneNumberPage"));
+const AccountPhoneNumberPage = lazy(
+  () => import("~/pages/AccountPhoneNumberPage"),
+);
 const ErrorPage = lazy(() => import("~/pages/ErrorPage"));
+const AccountPhoneNumberOtpPage = lazy(
+  () => import("~/pages/AccountPhoneNumberOtpPage"),
+);
+const AccountPasswordPage = lazy(() => import("~/pages/AccountPasswordPage"));
 
 const routes = (
   <Routes>
     <Route>
       <Route
-        path={ROUTES.PHONE_NUMBER_INPUT_PAGE}
-        element={<PhoneNumberPage />}
+        path={ROUTES.ACCOUNT_PHONE_NUMBER_PAGE}
+        element={<AccountPhoneNumberPage />}
+      />
+      <Route
+        path={ROUTES.ACCOUNT_PASSWORD_PAGE}
+        element={<AccountPasswordPage />}
+      />
+      <Route
+        path={ROUTES.ACCOUNT_OTP_PAGE}
+        element={<AccountPhoneNumberOtpPage />}
       />
     </Route>
     <Route path={ROUTES.ERROR_PAGE} element={<ErrorPage />} />

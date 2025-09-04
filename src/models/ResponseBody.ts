@@ -3,3 +3,8 @@ export type ResponseBody<T> = {
   data: T;
   msg: string;
 };
+
+export type CommonErrorResponse = {
+  title: string;
+  message: string;
+};

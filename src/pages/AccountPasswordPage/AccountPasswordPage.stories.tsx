@@ -2,6 +2,8 @@ import type { Meta, StoryObj } from "@storybook/react";
 import { expect, userEvent, within } from "@storybook/test";
 import { reactRouterParameters } from "storybook-addon-remix-react-router";
 
+import { authCustomMockApi } from "~/__mocks__/api/authApi";
+
 import AccountPasswordPage from "./AccountPasswordPage";
 
 const meta: Meta<typeof AccountPasswordPage> = {
@@ -156,5 +158,60 @@ export const LoginAction: Story = {
     expect(nextButton).toBeInTheDocument();
     expect(nextButton).toBeEnabled();
     await userEvent.click(nextButton);
+  },
+};
+
+export const LoginApiError: Story = {
+  parameters: {
+    msw: {
+      handlers: {
+        login: authCustomMockApi.login,
+      },
+    },
+    reactRouter: reactRouterParameters({
+      location: {
+        state: {
+          phoneNumber: "09012345678",
+          isEntry: false,
+        },
+      },
+    }),
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const headerTitle = await canvas.findByText(/パスワード入力/i);
+    expect(headerTitle).toBeInTheDocument();
+
+    const passwordInput = await canvas.findByLabelText(/パスワード$/);
+    expect(passwordInput).toBeInTheDocument();
+    await userEvent.type(passwordInput, "asdf1234");
+
+    const passwordConfirmInput = canvas.queryByLabelText(/パスワード（確認）/);
+    expect(passwordConfirmInput).not.toBeInTheDocument();
+
+    const birthDay = canvas.queryByLabelText(/生年月日/i);
+    expect(birthDay).not.toBeInTheDocument();
+
+    const gender = canvas.queryByText(/性別/i);
+    expect(gender).not.toBeInTheDocument();
+
+    const nextButton = await canvas.findByRole("button", { name: /次へ/ });
+    expect(nextButton).toBeInTheDocument();
+    expect(nextButton).toBeEnabled();
+    await userEvent.click(nextButton);
+
+    const ownerCanvas = within(canvasElement.ownerDocument.body);
+    const errorTitle = await ownerCanvas.findByText(/パスワードが違います/i);
+    expect(errorTitle).toBeInTheDocument();
+
+    const errorMessage =
+      await ownerCanvas.findByText(/再度ご確認の上お試しください/i);
+    expect(errorMessage).toBeInTheDocument();
+
+    const errorCloseButton = await ownerCanvas.findByRole("button", {
+      name: /閉じる/i,
+    });
+    expect(errorCloseButton).toBeInTheDocument();
+    await userEvent.click(errorCloseButton);
   },
 };

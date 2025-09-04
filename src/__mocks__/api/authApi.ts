@@ -1,6 +1,6 @@
 import { http, HttpHandler, HttpResponse, PathParams } from "msw";
 
-import { CheckPhoneNumberRequest, TokensType } from "~/models";
+import { CheckPhoneNumberRequest, LoginRequest, TokensType } from "~/models";
 
 type MockApis = {
   checkNumber: HttpHandler;
@@ -28,11 +28,21 @@ export const authMockApi: MockApis = {
 
 type CustomMockApis = {
   checkNumber: HttpHandler;
+  login: HttpHandler;
 };
 
 export const authCustomMockApi: CustomMockApis = {
   checkNumber: http.get(`/check-phone-number`, () =>
     HttpResponse.json(null, { status: 401 }),
+  ),
+  login: http.post<PathParams, LoginRequest>(`/login`, async () =>
+    HttpResponse.json(
+      {
+        title: "パスワードが違います",
+        message: "再度ご確認の上お試しください",
+      },
+      { status: 400 },
+    ),
   ),
 };
 
@@ -58,7 +68,21 @@ export const authSampleMockApi: SampleMockApis = {
       return HttpResponse.json(null, { status: 204 });
     },
   ),
-  login: http.post(`/login`, () => HttpResponse.json(null, { status: 204 })),
+  login: http.post<PathParams, LoginRequest>(`/login`, async ({ request }) => {
+    const { password } = await request.json();
+
+    if (password === "aaaa1111") {
+      return HttpResponse.json(
+        {
+          title: "パスワードが違います",
+          message: "再度ご確認の上お試しください",
+        },
+        { status: 400 },
+      );
+    }
+
+    return HttpResponse.json(null, { status: 204 });
+  }),
   signUp: http.post(`/sign-up`, () => HttpResponse.json(null, { status: 204 })),
   confirmSignUp: http.post(`/confirm-sign-up`, () => {
     // TODO: 任意のデータをjwtエンコードして返すようにする

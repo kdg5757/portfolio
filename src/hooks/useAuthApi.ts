@@ -20,6 +20,7 @@ type UseCheckPhoneNumberMutation = UseMutationResult<
 export const useCheckPhoneNumberMutation = (): UseCheckPhoneNumberMutation =>
   useMutation({
     mutationFn: authApi.checkPhoneNumber,
+    throwOnError: false,
   });
 
 type UseLoginMutation = UseMutationResult<

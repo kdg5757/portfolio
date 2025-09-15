@@ -1,5 +1,6 @@
 import { useMutation, UseMutationResult } from "@tanstack/react-query";
 import { AxiosError, AxiosResponse } from "axios";
+import { useSetAtom } from "jotai";
 
 import { authApi } from "~/apis";
 import {
@@ -9,6 +10,7 @@ import {
   SignUpRequest,
   TokensType,
 } from "~/models";
+import { userTokenAtom } from "~/store";
 
 type UseCheckPhoneNumberMutation = UseMutationResult<
   AxiosResponse<void>,
@@ -54,7 +56,41 @@ type UseConfirmSignUpMutation = UseMutationResult<
   unknown
 >;
 
-export const useConfirmSignUpMutation = (): UseConfirmSignUpMutation =>
-  useMutation({
-    mutationFn: authApi.confirmSignUp,
+export const useConfirmSignUpMutation = (): UseConfirmSignUpMutation => {
+  const setUserToken = useSetAtom(userTokenAtom);
+  const mutationFn = async (
+    postData: ConfirmRequest,
+  ): Promise<AxiosResponse<TokensType>> => {
+    const response = await authApi.confirmSignUp(postData);
+    setUserToken(response.data);
+
+    return response;
+  };
+
+  return useMutation({
+    mutationFn,
   });
+};
+
+type UseConfirmLoginMutation = UseMutationResult<
+  AxiosResponse<TokensType>,
+  AxiosError<void>,
+  ConfirmRequest,
+  unknown
+>;
+
+export const useConfirmLoginMutation = (): UseConfirmLoginMutation => {
+  const setUserToken = useSetAtom(userTokenAtom);
+  const mutationFn = async (
+    postData: ConfirmRequest,
+  ): Promise<AxiosResponse<TokensType>> => {
+    const response = await authApi.confirmLogin(postData);
+    setUserToken(response.data);
+
+    return response;
+  };
+
+  return useMutation({
+    mutationFn,
+  });
+};

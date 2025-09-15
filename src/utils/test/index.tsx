@@ -63,4 +63,24 @@ const renderTestComponent = (
     wrapper: TestProvider,
   });
 
-export { renderRawComponent, renderTestComponent };
+const mockMatchMedia = (width: number): void => {
+  Object.defineProperty(window, "matchMedia", {
+    writable: true,
+    value: (query: string) => {
+      const minWidthMatch = query.match(/\(min-width:\s*(\d+)px\)/);
+      const minWidth = minWidthMatch ? parseInt(minWidthMatch[1], 10) : 0;
+      return {
+        matches: width >= minWidth,
+        media: query,
+        onchange: null,
+        addListener: vi.fn(),
+        removeListener: vi.fn(),
+        addEventListener: vi.fn(),
+        removeEventListener: vi.fn(),
+        dispatchEvent: vi.fn(),
+      };
+    },
+  });
+};
+
+export { renderRawComponent, renderTestComponent, mockMatchMedia };

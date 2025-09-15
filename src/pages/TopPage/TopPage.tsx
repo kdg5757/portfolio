@@ -1,12 +1,12 @@
-import Styles from "./Home.module.scss";
+import Layout from "~/components/Layout";
 
 type Props = Record<string, never>;
 
 const Home: React.FC<Props> = ({}) => {
   return (
-    <>
-      <h1 className={Styles.mainTitle}>Home</h1>
-    </>
+    <Layout>
+      <h1>TopPage</h1>
+    </Layout>
   );
 };
 

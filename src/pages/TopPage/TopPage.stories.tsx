@@ -1,11 +1,11 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { expect, within } from "@storybook/test";
 
-import Home from "./Home";
+import TopPage from "./TopPage";
 
-const meta: Meta<typeof Home> = {
-  component: Home,
-} satisfies Meta<typeof Home>;
+const meta: Meta<typeof TopPage> = {
+  component: TopPage,
+} satisfies Meta<typeof TopPage>;
 
 export default meta;
 
@@ -15,7 +15,7 @@ export const Primary: Story = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
 
-    const mainTitle = canvas.getByText(/Home/i);
+    const mainTitle = canvas.getByText(/TopPage/i);
     expect(mainTitle).toBeInTheDocument();
   },
 };

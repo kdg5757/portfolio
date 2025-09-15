@@ -20,7 +20,7 @@ import "../src/App.css";
 import { CommonErrorResponse } from "~/models";
 import { useState } from "react";
 import ErrorPopup from "~/components/ErrorPopup";
-
+import { MINIMAL_VIEWPORTS } from "@storybook/addon-viewport";
 const BaseDecorator = (Story: StoryFn) => {
   return (
     <JotaiProvider>
@@ -121,6 +121,10 @@ const preview: Preview = {
       handlers: {
         ...storybookHandlers,
       },
+    },
+    viewport: {
+      viewports: MINIMAL_VIEWPORTS,
+      defaultViewport: "responsive",
     },
   },
   decorators: [BaseDecorator, ThemeDecorator, QueryDecorator, withRouter],

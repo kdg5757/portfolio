@@ -1,12 +1,19 @@
+/* eslint-disable sonarjs/no-duplicate-string */
 import { http, HttpHandler, HttpResponse, PathParams } from "msw";
 
-import { CheckPhoneNumberRequest, LoginRequest, TokensType } from "~/models";
+import {
+  CheckPhoneNumberRequest,
+  ConfirmRequest,
+  LoginRequest,
+  TokensType,
+} from "~/models";
 
 type MockApis = {
   checkNumber: HttpHandler;
   login: HttpHandler;
   signUp: HttpHandler;
   confirmSignUp: HttpHandler;
+  confirmLogin: HttpHandler;
 };
 
 export const authMockApi: MockApis = {
@@ -16,6 +23,15 @@ export const authMockApi: MockApis = {
   login: http.post(`/login`, () => HttpResponse.json(null, { status: 204 })),
   signUp: http.post(`/sign-up`, () => HttpResponse.json(null, { status: 204 })),
   confirmSignUp: http.post(`/confirm-sign-up`, () => {
+    // TODO: 任意のデータをjwtエンコードして返すようにする
+    const response: TokensType = {
+      idToken: "idToken",
+      accessToken: "accessToken",
+      refreshToken: "refreshToken",
+    };
+    return HttpResponse.json(response, { status: 200 });
+  }),
+  confirmLogin: http.post(`/confirm-login`, () => {
     // TODO: 任意のデータをjwtエンコードして返すようにする
     const response: TokensType = {
       idToken: "idToken",
@@ -52,6 +68,7 @@ type SampleMockApis = {
   login: HttpHandler;
   signUp: HttpHandler;
   confirmSignUp: HttpHandler;
+  confirmLogin: HttpHandler;
 };
 
 export const authSampleMockApi: SampleMockApis = {
@@ -84,13 +101,70 @@ export const authSampleMockApi: SampleMockApis = {
     return HttpResponse.json(null, { status: 204 });
   }),
   signUp: http.post(`/sign-up`, () => HttpResponse.json(null, { status: 204 })),
-  confirmSignUp: http.post(`/confirm-sign-up`, () => {
-    // TODO: 任意のデータをjwtエンコードして返すようにする
-    const response: TokensType = {
-      idToken: "idToken",
-      accessToken: "accessToken",
-      refreshToken: "refreshToken",
-    };
-    return HttpResponse.json(response, { status: 200 });
-  }),
+  confirmSignUp: http.post<PathParams, ConfirmRequest>(
+    `/confirm-sign-up`,
+    async ({ request }) => {
+      const { code } = await request.json();
+      if (code === "888888") {
+        return HttpResponse.json(
+          {
+            title: "コードが間違っているます",
+            message: "再度ご確認の上お試しください",
+          },
+          { status: 400 },
+        );
+      }
+
+      if (code === "999999") {
+        return HttpResponse.json(
+          {
+            title: "アカウント作成に失敗しました",
+            message: "再度ご確認の上お試しください",
+          },
+          { status: 400 },
+        );
+      }
+
+      // TODO: 任意のデータをjwtエンコードして返すようにする
+      const response: TokensType = {
+        idToken: "idToken",
+        accessToken: "accessToken",
+        refreshToken: "refreshToken",
+      };
+      return HttpResponse.json(response, { status: 200 });
+    },
+  ),
+  confirmLogin: http.post<PathParams, ConfirmRequest>(
+    `/confirm-login`,
+    async ({ request }) => {
+      const { code } = await request.json();
+      if (code === "888888") {
+        return HttpResponse.json(
+          {
+            title: "コードが間違っているます",
+            message: "再度ご確認の上お試しください",
+          },
+          { status: 400 },
+        );
+      }
+
+      if (code === "999999") {
+        return HttpResponse.json(
+          {
+            title: "ログインに失敗しました",
+            message: "再度ご確認の上お試しください",
+          },
+          { status: 400 },
+        );
+      }
+
+      // TODO: 任意のデータをjwtエンコードして返すようにする
+      const response: TokensType = {
+        idToken: "idToken",
+        accessToken: "accessToken",
+        refreshToken: "refreshToken",
+      };
+      return HttpResponse.json(response, { status: 200 });
+    },
+  ),
 };

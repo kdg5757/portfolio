@@ -15,6 +15,7 @@ type Return = {
   login: (params: LoginRequest) => Promise<AxiosResponse<void>>;
   signUp: (params: SignUpRequest) => Promise<AxiosResponse<void>>;
   confirmSignUp: (params: ConfirmRequest) => Promise<AxiosResponse<TokensType>>;
+  confirmLogin: (params: ConfirmRequest) => Promise<AxiosResponse<TokensType>>;
 };
 
 export const authEndpoints = (client: AxiosInstance): Return => ({
@@ -36,6 +37,12 @@ export const authEndpoints = (client: AxiosInstance): Return => ({
     postData: ConfirmRequest,
   ): Promise<AxiosResponse<TokensType>> => {
     const path = `/confirm-sign-up`;
+    return client.post(path, postData);
+  },
+  confirmLogin: (
+    postData: ConfirmRequest,
+  ): Promise<AxiosResponse<TokensType>> => {
+    const path = `/confirm-login`;
     return client.post(path, postData);
   },
 });

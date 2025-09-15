@@ -2,7 +2,7 @@ import { composeStories } from "@storybook/react";
 
 import { renderRawComponent } from "~/utils/test";
 
-import * as stories from "./Home.stories";
+import * as stories from "./TopPage.stories";
 
 const { Primary } = composeStories(stories);
 

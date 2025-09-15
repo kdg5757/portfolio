@@ -17,11 +17,19 @@ import { contentStyle } from "./AccountPasswordPage.styles";
 
 type Props = Record<string, never>;
 
+type State = {
+  phoneNumber: string;
+  isEntry?: boolean;
+};
+
 const AccountPasswordPage: React.FC<Props> = () => {
+  const { state } = useLocation();
+  if (!state?.phoneNumber) {
+    throw new Error("phoneNumber is required");
+  }
+
   const navigate = useNavigate();
-  const {
-    state: { isEntry, phoneNumber },
-  } = useLocation();
+  const { isEntry, phoneNumber } = state as State;
   const { mutate: signUp, isPending: isSignUpPending } = useSignUpMutation();
   const { mutate: login, isPending: isLoginPending } = useLoginMutation();
   const [form] = Form.useForm<{
@@ -138,7 +146,7 @@ const AccountPasswordPage: React.FC<Props> = () => {
               ]}
             >
               <Button onClick={openDatePicker}>
-                {birthday ?? "0000-00-00"}
+                {birthday ?? "1980-01-01"}
               </Button>
             </Form.Item>
           ) : null}

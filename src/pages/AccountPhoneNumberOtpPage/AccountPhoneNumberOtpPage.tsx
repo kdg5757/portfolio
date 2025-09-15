@@ -2,7 +2,6 @@ import { useMemo, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
 import { Button, Input } from "antd";
-import { useSetAtom } from "jotai";
 
 import BackButton from "~/components/BackButton";
 import Content from "~/components/Content";
@@ -11,37 +10,45 @@ import Header from "~/components/Header";
 import Layout from "~/components/Layout";
 import ResendButton from "~/components/ResendButton";
 import {
+  useConfirmLoginMutation,
   useConfirmSignUpMutation,
   useLoginMutation,
   useSignUpMutation,
 } from "~/hooks";
 import { ROUTES } from "~/router";
-import { userTokenAtom } from "~/store";
 
 type Props = Record<string, never>;
 
-const AccountPhoneNumberOtpPage: React.FC<Props> = () => {
-  const navigate = useNavigate();
-  const {
-    state: { phoneNumber, password, birthday, gender },
-  } = useLocation();
-  const { mutate: signUp, isPending: isSignUpPending } = useSignUpMutation();
-  const { mutate: login, isPending: isLoginPending } = useLoginMutation();
-  const { mutate: confirmSignUp, isPending: isConfirmPending } =
-    useConfirmSignUpMutation();
-  const setUserToken = useSetAtom(userTokenAtom);
-  const [otp, setOtp] = useState<string>("");
-  const isDisabled = useMemo(
-    () => isConfirmPending || !/^\d{6}$/.test(otp),
-    [isConfirmPending, otp],
-  );
+type State = {
+  phoneNumber: string;
+  password: string;
+  gender?: string;
+  birthday?: string;
+};
 
-  if (!phoneNumber) {
+const AccountPhoneNumberOtpPage: React.FC<Props> = () => {
+  const { state } = useLocation();
+  if (!state?.phoneNumber) {
     throw new Error("phoneNumber is required");
   }
 
+  const { phoneNumber, password, birthday, gender } = state as State;
+  const navigate = useNavigate();
+  const { mutate: signUp, isPending: isSignUpPending } = useSignUpMutation();
+  const { mutate: login, isPending: isLoginPending } = useLoginMutation();
+  const { mutate: confirmSignUp, isPending: isConfirmSignupPending } =
+    useConfirmSignUpMutation();
+  const { mutate: confirmLogin, isPending: isConfirmLoginPending } =
+    useConfirmLoginMutation();
+  const [otp, setOtp] = useState<string>("");
+  const isDisabled = useMemo(
+    () =>
+      isConfirmSignupPending || isConfirmLoginPending || !/^\d{6}$/.test(otp),
+    [isConfirmSignupPending, isConfirmLoginPending, otp],
+  );
+
   const onResend = (): void => {
-    if (birthday || gender) {
+    if (!birthday && !gender) {
       login({ phoneNumber, password });
       return;
     }
@@ -54,12 +61,23 @@ const AccountPhoneNumberOtpPage: React.FC<Props> = () => {
       return;
     }
 
+    if (!birthday && !gender) {
+      confirmLogin(
+        { code: otp },
+        {
+          onSuccess: () => {
+            navigate(`/${ROUTES.TOP_PAGE}`);
+          },
+        },
+      );
+      return;
+    }
+
     confirmSignUp(
       { code: otp },
       {
-        onSuccess: (response) => {
-          setUserToken(response.data);
-          navigate(`/${ROUTES.ACCOUNT_ENTRY_SUCCESS_PAGE}`);
+        onSuccess: () => {
+          navigate(`/${ROUTES.TOP_PAGE}`);
         },
       },
     );

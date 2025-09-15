@@ -3,10 +3,11 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 import { ROUTES } from "./routes";
 
+const TopPage = lazy(() => import("~/pages/TopPage"));
+const ErrorPage = lazy(() => import("~/pages/ErrorPage"));
 const AccountPhoneNumberPage = lazy(
   () => import("~/pages/AccountPhoneNumberPage"),
 );
-const ErrorPage = lazy(() => import("~/pages/ErrorPage"));
 const AccountPhoneNumberOtpPage = lazy(
   () => import("~/pages/AccountPhoneNumberOtpPage"),
 );
@@ -14,6 +15,7 @@ const AccountPasswordPage = lazy(() => import("~/pages/AccountPasswordPage"));
 
 const routes = (
   <Routes>
+    <Route path={ROUTES.TOP_PAGE} element={<TopPage />} />
     <Route>
       <Route
         path={ROUTES.ACCOUNT_PHONE_NUMBER_PAGE}

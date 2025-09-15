@@ -25,9 +25,7 @@ describe("storybook UT", () => {
     const { container } = renderRawComponent(<Action />);
     await Action.play!({ canvasElement: container });
 
-    expect(mockedNavigator).toHaveBeenCalledWith(
-      `/${ROUTES.ACCOUNT_ENTRY_SUCCESS_PAGE}`,
-    );
+    expect(mockedNavigator).toHaveBeenCalledWith(`/${ROUTES.TOP_PAGE}`);
   });
 
   test("BackButton", async () => {

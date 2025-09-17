@@ -7,7 +7,7 @@ const meta: Meta<typeof GlobalHeader> = {
   component: GlobalHeader,
   args: {
     title: "テスト",
-    menuList: (
+    children: (
       <>
         <div>メニュー1</div>
         <div>メニュー2</div>

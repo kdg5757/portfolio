@@ -11,18 +11,18 @@ import {
   wrapperStyle,
 } from "./GlobalHeader.styles";
 
-type Props = {
-  title: string;
-  menuList: ReactNode;
+type Props = React.ComponentProps<"header"> & {
+  title: ReactNode;
+  children: ReactNode;
 };
 
-const GlobalHeader: React.FC<Props> = ({ title, menuList }) => {
+const GlobalHeader: React.FC<Props> = ({ title, children, ...props }) => {
   const screens = useBreakpoint();
   const [isOpen, setIsOpen] = useState(false);
   const isMobile = useMemo(() => !screens.md, [screens]);
 
   return (
-    <header css={wrapperStyle}>
+    <header css={wrapperStyle} {...props}>
       <div>{title}</div>
       {isMobile ? (
         <button
@@ -44,7 +44,7 @@ const GlobalHeader: React.FC<Props> = ({ title, menuList }) => {
           menuAreaPositionStyle(isMobile),
         ]}
       >
-        {menuList}
+        {children}
       </div>
     </header>
   );

@@ -16,7 +16,10 @@ const Home: React.FC<Props> = ({}) => (
   <Layout>
     <GlobalHeader title="PortFolio" css={headerStyle}>
       <MenuLink name="Profile" to="#profile" />
-      <MenuLink name="aaa" to="#aaa" />
+      <MenuLink name="About" to="#about" />
+      <MenuLink name="Project" to="#project" />
+      <MenuLink name="Skill" to="#skill" />
+      <MenuLink name="Contact" to="#contact" />
     </GlobalHeader>
     <Content css={contentStyle}>
       <ProfileSection />

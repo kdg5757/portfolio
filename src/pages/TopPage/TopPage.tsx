@@ -12,8 +12,8 @@ import { contentStyle, headerStyle } from "./TopPage.styles";
 
 type Props = Record<string, never>;
 
-const Home: React.FC<Props> = ({}) => (
-  <Layout>
+const Home: React.FC<Props> = ({ ...props }) => (
+  <Layout {...props}>
     <GlobalHeader title="PortFolio" css={headerStyle}>
       <MenuLink name="Profile" to="#profile" />
       <MenuLink name="About" to="#about" />

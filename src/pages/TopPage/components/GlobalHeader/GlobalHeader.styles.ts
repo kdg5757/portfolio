@@ -16,7 +16,7 @@ export const wrapperStyle: Interpolation<DefaultTheme> = (theme) => ({
   zIndex: 10,
 });
 
-export const buttonStyle: Interpolation<DefaultTheme> = () => ({
+export const buttonStyle: Interpolation<DefaultTheme> = {
   padding: 0,
   display: "flex",
   flex: "0 0 40px",
@@ -25,13 +25,13 @@ export const buttonStyle: Interpolation<DefaultTheme> = () => ({
   justifyContent: "center",
   background: "none",
   border: "none",
-});
+};
 
-export const menuAreaStyle =
-  (isOpen: boolean): Interpolation<DefaultTheme> =>
-  () => ({
-    display: isOpen ? "flex" : "none",
-  });
+export const menuAreaStyle = (
+  isOpen: boolean,
+): Interpolation<DefaultTheme> => ({
+  display: isOpen ? "flex" : "none",
+});
 
 export const menuAreaPositionStyle =
   (isMobile: boolean): Interpolation<DefaultTheme> =>

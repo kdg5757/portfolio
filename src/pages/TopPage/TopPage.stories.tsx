@@ -22,7 +22,7 @@ export const Primary: Story = {
     expect(name).toBeInTheDocument();
 
     const description = await canvas.findByText(
-      /クライアントの要望を現実に実現したいフロントエンドエンジニアを目指す/i
+      /クライアントの要望を現実に実現したいフロントエンドエンジニアを目指す/i,
     );
     expect(description).toBeInTheDocument();
 

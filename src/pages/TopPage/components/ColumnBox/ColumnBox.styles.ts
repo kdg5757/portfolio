@@ -2,11 +2,11 @@ import { Interpolation } from "@emotion/react";
 
 import { DefaultTheme } from "~/models";
 
-export const wrapperStyle: Interpolation<DefaultTheme> = (theme) => ({
+export const columnStyle: Interpolation<DefaultTheme> = (theme) => ({
   display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
+  width: "100%",
   flexDirection: "column",
-  minHeight: "100svh",
   background: theme.white,
+  border: `1px solid ${theme.gray?.line}`,
+  borderRadius: "0.5rem",
 });

@@ -3,6 +3,10 @@ import { Interpolation } from "@emotion/react";
 import { DefaultTheme } from "~/models";
 
 export const buttonStyle: Interpolation<DefaultTheme> = (theme) => ({
+  padding: "1rem 2rem !important",
+  minHeight: "auto",
+  height: "auto",
+  fontSize: "1.5rem",
   fontWeight: 600,
   cursor: "pointer",
   "&.ant-btn-color-primary": {

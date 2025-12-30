@@ -14,12 +14,12 @@ export const wrapperStyle: Interpolation<DefaultTheme> = (theme) => ({
   zIndex: 10,
 });
 
-export const centerStyle: Interpolation<DefaultTheme> = () => ({
+export const centerStyle: Interpolation<DefaultTheme> = {
   flex: "0 1 100%",
   fontWeight: "bold",
   textAlign: "center",
-});
+};
 
-export const sideStyle: Interpolation<DefaultTheme> = () => ({
+export const sideStyle: Interpolation<DefaultTheme> = {
   flex: "0 0 40px",
-});
+};

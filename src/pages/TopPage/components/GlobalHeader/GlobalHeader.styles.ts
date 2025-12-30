@@ -3,6 +3,7 @@ import { Interpolation } from "@emotion/react";
 import { DefaultTheme } from "~/models";
 
 export const wrapperStyle: Interpolation<DefaultTheme> = (theme) => ({
+  padding: "0 16px",
   display: "flex",
   justifyContent: "space-between",
   alignItems: "center",
@@ -34,7 +35,7 @@ export const menuAreaStyle =
 
 export const menuAreaPositionStyle =
   (isMobile: boolean): Interpolation<DefaultTheme> =>
-  () => {
+  (theme) => {
     if (!isMobile) {
       return {
         alignItems: "center",
@@ -48,5 +49,7 @@ export const menuAreaPositionStyle =
       position: "absolute",
       top: "40px",
       right: 0,
+      background: theme.white,
+      boxShadow: `0 4px 6px ${theme.gray?.bg}`,
     };
   };

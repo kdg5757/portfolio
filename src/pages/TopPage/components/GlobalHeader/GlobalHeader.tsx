@@ -32,9 +32,9 @@ const GlobalHeader: React.FC<Props> = ({ title, children, ...props }) => {
           data-testid="menu-button"
         >
           {!isOpen ? (
-            <MenuOutlined style={{ fontSize: "20px" }} />
+            <MenuOutlined style={{ fontSize: "28px" }} />
           ) : (
-            <CloseOutlined style={{ fontSize: "20px" }} />
+            <CloseOutlined style={{ fontSize: "28px" }} />
           )}
         </button>
       ) : null}

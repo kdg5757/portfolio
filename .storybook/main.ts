@@ -6,12 +6,16 @@ const config: StorybookConfig = {
     "@storybook/addon-onboarding",
     "@storybook/addon-links",
     "@storybook/addon-essentials",
-    "@chromatic-com/storybook",
     "@storybook/addon-interactions",
+    "storybook-addon-remix-react-router",
+    "@storybook/addon-viewport",
   ],
   framework: {
     name: "@storybook/react-vite",
     options: {},
+  },
+  docs: {
+    autodocs: true,
   },
 };
 export default config;

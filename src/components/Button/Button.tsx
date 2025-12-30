@@ -1,31 +1,15 @@
-import { ReactNode } from "react";
+import { Button as AntButton } from "antd";
 
-import Styles from "./Button.module.scss";
+import { buttonStyle } from "./Button.styles";
 
-type Props = {
-  children: ReactNode;
-  isDisabled?: boolean;
-  className?: string;
-  onClick?: () => void;
+type Props = Omit<React.ComponentProps<typeof AntButton>, "type"> & {
+  type: "primary" | "dashed" | "text";
 };
 
-const Button: React.FC<Props> = ({
-  className,
-  children,
-  isDisabled,
-  onClick,
-  ...props
-}) => {
-  return (
-    <button
-      className={`${Styles.button} ${className}`}
-      onClick={onClick}
-      disabled={isDisabled}
-      {...props}
-    >
-      {children}
-    </button>
-  );
-};
+const Button: React.FC<Props> = ({ type, children, ...props }) => (
+  <AntButton type={type} css={buttonStyle} {...props}>
+    {children}
+  </AntButton>
+);
 
 export default Button;

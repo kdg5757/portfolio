@@ -1,29 +1,86 @@
+import { ReactNode } from "react";
 import { MemoryRouter } from "react-router-dom";
 
+import {
+  MutationCache,
+  QueryCache,
+  QueryClient,
+  QueryClientProvider,
+} from "@tanstack/react-query";
 import {
   queries,
   render as renderRawComponent,
   RenderResult,
 } from "@testing-library/react";
-import { ReactNode } from "react";
-import { RecoilRoot } from "recoil";
+import { isAxiosError } from "axios";
+import { Provider as JotaiProvider } from "jotai";
 
 type TestProps = {
   children: ReactNode;
 };
 
 export const TestProvider: React.FC<TestProps> = ({ children }) => {
+  const queryCache = new QueryCache({
+    onError: (error) => {
+      if (!isAxiosError(error)) {
+        return;
+      }
+      console.error("Global query error:", error);
+    },
+  });
+
+  const mutationCache = new MutationCache({
+    onError: (error) => {
+      if (!isAxiosError(error)) {
+        return;
+      }
+      console.error("Global query error:", error);
+    },
+  });
+
+  const queryClient = new QueryClient({
+    queryCache,
+    mutationCache,
+    defaultOptions: {
+      queries: {
+        retry: false,
+      },
+    },
+  });
   return (
-    <RecoilRoot>
-      <MemoryRouter>{children}</MemoryRouter>
-    </RecoilRoot>
+    <JotaiProvider>
+      <QueryClientProvider client={queryClient}>
+        <MemoryRouter>{children}</MemoryRouter>
+      </QueryClientProvider>
+    </JotaiProvider>
   );
 };
 
-export const renderTestComponent = (
+const renderTestComponent = (
   component: React.ReactElement,
-): RenderResult<typeof queries, HTMLElement, HTMLElement> => {
-  return renderRawComponent(component, {
+): RenderResult<typeof queries, HTMLElement, HTMLElement> =>
+  renderRawComponent(component, {
     wrapper: TestProvider,
   });
+
+const mockMatchMedia = (width: number): void => {
+  Object.defineProperty(window, "matchMedia", {
+    writable: true,
+    value: (query: string) => {
+      const minWidthMatch = query.match(/\(min-width:\s*(\d+)px\)/);
+      const minWidth = minWidthMatch ? parseInt(minWidthMatch[1], 10) : 0;
+      return {
+        matches: width >= minWidth,
+        media: query,
+        onchange: null,
+        addListener: vi.fn(),
+        removeListener: vi.fn(),
+        addEventListener: vi.fn(),
+        removeEventListener: vi.fn(),
+        dispatchEvent: vi.fn(),
+      };
+    },
+  });
 };
+
+export { renderRawComponent, renderTestComponent, mockMatchMedia };

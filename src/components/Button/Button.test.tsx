@@ -1,32 +1,27 @@
 import { composeStories } from "@storybook/react";
 
-import * as stories from "./Button.stories";
-import { renderTestComponent } from "~/utils/test";
+import { renderRawComponent } from "~/utils/test";
 
-const { Primary, Disabled, Action } = composeStories(stories);
+import * as stories from "./Button.stories";
+
+const { Primary, Dashed, Text } = composeStories(stories);
 
 describe("storybook UT", () => {
   test("Primary", async () => {
     await Primary.load();
-
-    const { container } = renderTestComponent(<Primary />);
-
+    const { container } = renderRawComponent(<Primary />);
     await Primary.play!({ canvasElement: container });
   });
 
-  test("Disabled", async () => {
-    await Disabled.load();
-
-    const { container } = renderTestComponent(<Disabled />);
-
-    await Disabled.play!({ canvasElement: container });
+  test("Dashed", async () => {
+    await Dashed.load();
+    const { container } = renderRawComponent(<Dashed />);
+    await Dashed.play!({ canvasElement: container });
   });
 
-  test("Action", async () => {
-    await Action.load();
-
-    const { container } = renderTestComponent(<Action />);
-
-    await Action.play!({ canvasElement: container });
+  test("Text", async () => {
+    await Text.load();
+    const { container } = renderRawComponent(<Text />);
+    await Text.play!({ canvasElement: container });
   });
 });

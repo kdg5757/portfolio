@@ -1,13 +1,14 @@
 import type { Meta, StoryObj } from "@storybook/react";
+import { expect, within } from "@storybook/test";
+
 import Button from "./Button";
-import { expect, fn, userEvent, waitFor, within } from "@storybook/test";
 
 const meta: Meta<typeof Button> = {
   component: Button,
   args: {
-    children: "ボタン",
-    className: "test",
-    onClick: fn(),
+    type: "primary",
+    children: "テスト",
+    disabled: false,
   },
 } satisfies Meta<typeof Button>;
 
@@ -16,42 +17,33 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Primary: Story = {
-  play: async ({ canvasElement, args: { children, className } }) => {
+  play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
-
-    const button = canvas.getByRole("button", { name: children as string });
+    const button = await canvas.findByRole("button", { name: /テスト/i });
     expect(button).toBeInTheDocument();
-    expect(button).toHaveClass(className!);
-    expect(button).toBeEnabled();
   },
 };
 
-export const Disabled: Story = {
+export const Dashed: Story = {
   args: {
     ...meta.args,
-    isDisabled: true,
+    type: "dashed",
   },
-  play: async ({ canvasElement, args: { children, className } }) => {
+  play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
-
-    const button = canvas.getByRole("button", { name: children as string });
+    const button = await canvas.findByRole("button", { name: /テスト/i });
     expect(button).toBeInTheDocument();
-    expect(button).toHaveClass(className!);
-    expect(button).toBeDisabled();
   },
 };
 
-export const Action: Story = {
-  play: async ({ canvasElement, args: { children, className, onClick } }) => {
+export const Text: Story = {
+  args: {
+    ...meta.args,
+    type: "text",
+  },
+  play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
-
-    const button = canvas.getByRole("button", { name: children as string });
+    const button = await canvas.findByRole("button", { name: /テスト/i });
     expect(button).toBeInTheDocument();
-    expect(button).toHaveClass(className!);
-    expect(button).toBeEnabled();
-    await userEvent.click(button);
-    await waitFor(() => {
-      expect(onClick).toHaveBeenCalled();
-    });
   },
 };

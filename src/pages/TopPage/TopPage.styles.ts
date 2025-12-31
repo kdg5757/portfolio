@@ -10,3 +10,7 @@ export const contentStyle: Interpolation<DefaultTheme> = {
   width: "100%",
   justifyContent: "flex-start",
 };
+
+export const footerStyle: Interpolation<DefaultTheme> = (theme) => ({
+  background: theme.white,
+});

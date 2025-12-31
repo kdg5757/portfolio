@@ -1,14 +1,14 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { expect, within } from "@storybook/test";
 
-import SectionDescription from "./SectionDescription";
+import Description from "./Description";
 
-const meta: Meta<typeof SectionDescription> = {
-  component: SectionDescription,
+const meta: Meta<typeof Description> = {
+  component: Description,
   args: {
     children: "説明文",
   },
-} satisfies Meta<typeof SectionDescription>;
+} satisfies Meta<typeof Description>;
 
 export default meta;
 

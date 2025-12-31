@@ -29,6 +29,7 @@ export const listStyle: Interpolation<DefaultTheme> = {
   padding: "0 0 0 1.5rem",
   li: {
     marginBottom: "1rem",
+    fontSize: "1rem",
     "&:last-of-type": {
       marginBottom: 0,
     },

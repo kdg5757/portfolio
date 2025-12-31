@@ -1,8 +1,8 @@
+import Description from "~/components/Description";
 import Title from "~/components/Title";
 
 import ColumnBox from "../ColumnBox";
 import ContentSection from "../ContentSection";
-import SectionDescription from "../SectionDescription";
 import {
   columnStyle,
   columnTitleStyle,
@@ -18,13 +18,13 @@ const AboutSection: React.FC<Props> = ({ ...props }) => (
     <Title tag="h2" css={titleStyle}>
       About
     </Title>
-    <SectionDescription>
+    <Description>
       2015年にコーダーとしてIT業界に入門し、現在はWebアプリケーションをメインで開発をしているフロントエンドエンジニアです。
       必要によって最新技術を学習しますが、それよりサービスを安定させることや、デザインや機能を正確に実現することが好きです。
-    </SectionDescription>
-    <SectionDescription>
+    </Description>
+    <Description>
       コーディング以外の時間には、運動や体を使うことをすることで、頭を休ませてよりいいアイデアが出るようにしています。
-    </SectionDescription>
+    </Description>
     <ColumnBox css={columnStyle}>
       <Title tag="h3" css={columnTitleStyle}>
         基本情報

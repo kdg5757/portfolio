@@ -1,4 +1,6 @@
 import Content from "~/components/Content";
+import Description from "~/components/Description";
+import Footer from "~/components/Footer";
 import Layout from "~/components/Layout";
 
 import AboutSection from "./components/AboutSection";
@@ -8,7 +10,7 @@ import MenuLink from "./components/MenuLink";
 import ProfileSection from "./components/ProfileSection";
 import ProjectSection from "./components/ProjectSection";
 import SkillSection from "./components/SkillSection";
-import { contentStyle, headerStyle } from "./TopPage.styles";
+import { contentStyle, footerStyle, headerStyle } from "./TopPage.styles";
 
 type Props = Record<string, never>;
 
@@ -28,6 +30,9 @@ const Home: React.FC<Props> = ({ ...props }) => (
       <SkillSection />
       <ContactSection />
     </Content>
+    <Footer css={footerStyle}>
+      <Description>copyright (c) 金 東建 all rights reserved.</Description>
+    </Footer>
   </Layout>
 );
 

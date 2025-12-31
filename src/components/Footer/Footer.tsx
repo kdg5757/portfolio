@@ -11,8 +11,10 @@ type Props = {
   css?: Interpolation<DefaultTheme>;
 };
 
-const Footer: React.FC<Props> = ({ children, css }) => (
-  <footer css={[wrapperStyle, css]}>{children}</footer>
+const Footer: React.FC<Props> = ({ children, css, ...props }) => (
+  <footer css={[wrapperStyle, css]} {...props}>
+    {children}
+  </footer>
 );
 
 export default Footer;

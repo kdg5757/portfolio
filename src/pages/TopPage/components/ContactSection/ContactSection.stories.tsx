@@ -28,5 +28,9 @@ export const Primary: Story = {
       "href",
       `mailto:kdg5757@yahoo.co.jp?subject=[PORTFOLIO] お問い合わせ`,
     );
+
+    const github = canvas.getByRole("link", { name: /github/i });
+    expect(github).toBeInTheDocument();
+    expect(github).toHaveAttribute("href", "https://github.com/kdg5757");
   },
 };

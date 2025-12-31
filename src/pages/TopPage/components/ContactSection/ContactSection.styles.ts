@@ -16,6 +16,13 @@ export const descriptionStyle: Interpolation<DefaultTheme> = {
   textAlign: "center",
 };
 
+export const buttonContainerStyle: Interpolation<DefaultTheme> = {
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  gap: "1.5rem",
+};
+
 export const buttonStyle: Interpolation<DefaultTheme> = {
   padding: "0.75rem 2rem !important",
   fontSize: "1rem",

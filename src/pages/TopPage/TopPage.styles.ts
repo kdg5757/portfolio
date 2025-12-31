@@ -12,5 +12,5 @@ export const contentStyle: Interpolation<DefaultTheme> = {
 };
 
 export const footerStyle: Interpolation<DefaultTheme> = (theme) => ({
-  background: theme.gray?.bg,
+  background: theme.white,
 });

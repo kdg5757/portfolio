@@ -66,6 +66,7 @@ const AccountPhoneNumberOtpPage: React.FC<Props> = () => {
         { code: otp },
         {
           onSuccess: () => {
+            // TODO: 生年月日と性別の入力を求めるページに遷移する
             navigate(`/${ROUTES.TOP_PAGE}`);
           },
         },
@@ -77,6 +78,7 @@ const AccountPhoneNumberOtpPage: React.FC<Props> = () => {
       { code: otp },
       {
         onSuccess: () => {
+          // TODO: 生年月日と性別があることで、登録APIを呼び出して、成功＆失敗ページへ遷移する
           navigate(`/${ROUTES.TOP_PAGE}`);
         },
       },

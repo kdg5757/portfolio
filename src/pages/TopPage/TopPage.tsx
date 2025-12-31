@@ -9,6 +9,7 @@ import GlobalHeader from "./components/GlobalHeader";
 import MenuLink from "./components/MenuLink";
 import ProfileSection from "./components/ProfileSection";
 import ProjectSection from "./components/ProjectSection";
+import SampleSection from "./components/SampleSection";
 import SkillSection from "./components/SkillSection";
 import { contentStyle, footerStyle, headerStyle } from "./TopPage.styles";
 
@@ -27,6 +28,7 @@ const Home: React.FC<Props> = ({ ...props }) => (
       <ProfileSection />
       <AboutSection />
       <ProjectSection />
+      <SampleSection />
       <SkillSection />
       <ContactSection />
     </Content>

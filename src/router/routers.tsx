@@ -6,12 +6,14 @@ import { ROUTES } from "./routes";
 const TopPage = lazy(() => import("~/pages/TopPage"));
 const ErrorPage = lazy(() => import("~/pages/ErrorPage"));
 const AccountPhoneNumberPage = lazy(
-  () => import("~/pages/AccountPhoneNumberPage"),
+  () => import("~/pages/authFlow/AccountPhoneNumberPage"),
 );
 const AccountPhoneNumberOtpPage = lazy(
-  () => import("~/pages/AccountPhoneNumberOtpPage"),
+  () => import("~/pages/authFlow/AccountPhoneNumberOtpPage"),
 );
-const AccountPasswordPage = lazy(() => import("~/pages/AccountPasswordPage"));
+const AccountPasswordPage = lazy(
+  () => import("~/pages/authFlow/AccountPasswordPage"),
+);
 
 const routes = (
   <Routes>

@@ -4,16 +4,16 @@ import { screen, userEvent } from "@storybook/test";
 import { ROUTES } from "~/router";
 import { renderRawComponent } from "~/utils/test";
 
-import { mockedNavigator } from "../../../vitest.setup";
+import { mockedNavigator } from "../../../../vitest.setup";
 import * as stories from "./AccountPhoneNumberOtpPage.stories";
 
 const { Primary, Action } = composeStories(stories);
 
 describe("storybook UT", () => {
-  afterEach(() => {
-    vi.clearAllMocks();
-    vi.resetModules();
+  beforeEach(() => {
+    mockedNavigator.mockClear();
   });
+
   test("Primary", async () => {
     await Primary.load();
     const { container } = renderRawComponent(<Primary />);
